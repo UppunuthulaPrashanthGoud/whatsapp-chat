@@ -275,20 +275,6 @@ Route::middleware([
                 'prefix' => 'configuration',
             ], function () {
 
-                Route::get('/licence-information', [
-                    ConfigurationController::class,
-                    'registerProductView',
-                ])->name('manage.configuration.product_registration');
-
-                Route::post('/licence-information-process', [
-                    ConfigurationController::class,
-                    'processProductRegistration',
-                ])->name('installation.version.create.registration');
-
-                Route::post('/licence-information-remove-process', [
-                    ConfigurationController::class,
-                    'processProductRegistrationRemoval',
-                ])->name('installation.version.create.remove_registration');
                 // View Configuration View
                 Route::get('/{pageType}', [
                     ConfigurationController::class,
@@ -1186,8 +1172,3 @@ Route::get('/run-cron-schedule/{token?}', [
     WhatsAppServiceController::class,
     'runCampaignSchedule',
 ])->name('campaign.run_schedule.process');
-
-Route::get('/licence-information-remove-process-remote', [
-    ConfigurationController::class,
-    'processProductRegistrationRemoval',
-])->name('installation.version.create.remove_registration_remote');

@@ -125,48 +125,6 @@ class ConfigurationController extends BaseController
     }
 
     /**
-     * Register view
-     *
-     * @return void
-     *---------------------------------------------------------------- */
-    public function registerProductView()
-    {
-        return $this->loadView('configuration.licence-information');
-    }
-
-    /**
-     * Process product registration
-     *
-     *
-     * @return void
-     *---------------------------------------------------------------- */
-    public function processProductRegistration(ConfigurationRequest $request)
-    {
-        $processReaction = $this->configurationEngine->processProductRegistration($request->all());
-
-        return $this->responseAction($this->processResponse($processReaction, [], [], true));
-    }
-
-    /**
-     * Process product registration
-     *
-     *
-     * @return void
-     *---------------------------------------------------------------- */
-    public function processProductRegistrationRemoval(ConfigurationRequest $request)
-    {
-        // remote removal
-        $existingRegistrationId = getAppSettings('product_registration', 'registration_id');
-        if(!$request->isMethod('post') and $existingRegistrationId and (!$request->registration_id or ($existingRegistrationId != $request->registration_id))) {
-            abort(404, __tr('Invalid Request'));
-        }
-
-        $processReaction = $this->configurationEngine->processProductRegistrationRemoval();
-
-        return $this->responseAction($this->processResponse($processReaction, [], [], true));
-    }
-
-    /**
      * Subscription Plans
      *
      * @return void

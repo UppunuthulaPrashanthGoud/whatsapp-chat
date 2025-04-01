@@ -1,13 +1,3 @@
-@php
-$hasActiveLicense = true;
-if(isLoggedIn() and (request()->route()->getName() != 'manage.configuration.product_registration') and (!getAppSettings('product_registration', 'registration_id') or sha1(array_get($_SERVER, 'HTTP_HOST', '') . getAppSettings('product_registration', 'registration_id') . '4.5+') !== getAppSettings('product_registration', 'signature'))) {
-    $hasActiveLicense = false;
-    if(hasCentralAccess()) {
-        header("Location: " . route('manage.configuration.product_registration'));
-        exit;
-    }
-}
-@endphp
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ $CURRENT_LOCALE_DIRECTION }}">
 <head>
@@ -50,44 +40,7 @@ if(isLoggedIn() and (request()->route()->getName() != 'manage.configuration.prod
             </div>
         </div>
         @endif
-            @if ($hasActiveLicense)
-            @if(hasVendorAccess())
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 mt-5 mb--7 pt-5 text-center">
-                        @php
-                        $vendorPlanDetails = vendorPlanDetails(null, null, getVendorId());
-                        @endphp
-                        @if(!$vendorPlanDetails->hasActivePlan())
-                            <div class="alert alert-danger">
-                                {{  $vendorPlanDetails->message }}
-                            </div>
-                        @elseif($vendorPlanDetails->is_expiring)
-                            <div class="alert alert-warning">
-                                {{  __tr('Your subscription plan is expiring on __endAt__', [
-                                    '__endAt__' => formatDate($vendorPlanDetails->ends_at)
-                                ]) }}
-                            </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        @endif
             @yield('content')
-            @else
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 my-5 py-5 text-center">
-                       <div class="card my-5 p-5">
-                        <i class="fas fa-exclamation-triangle fa-6x mb-4 text-warning"></i>
-                        <div class="alert alert-danger my-5">
-                            {{ __tr('Product has not been verified yet, please contact via profile or product page.') }}
-                        </div>
-                       </div>
-                    </div>
-                </div>
-            </div>
-            @endif
     </div>
     @guest()
     @include('layouts.footers.guest')

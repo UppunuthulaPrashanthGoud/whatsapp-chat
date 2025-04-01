@@ -186,12 +186,6 @@
                                     {!! __tr('WhatsApp Onboarding') !!}
                                 </a>
                             </li>
-                            <li class="nav-item <?= Request::fullUrl() == route('manage.configuration.read', ['pageType' => 'licence-information']) ? 'active' : '' ?>">
-                                <a class="nav-link"  href="<?= route('manage.configuration.read', ['pageType' => 'licence-information']) ?>">
-                                    <i class="fas fa-certificate"></i>
-                                    <span><?= __tr('License') ?></span>
-                                </a>
-                            </li>
                         </ul>
                     </div>
                 </li>
